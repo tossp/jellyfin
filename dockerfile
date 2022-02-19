@@ -35,20 +35,20 @@ RUN apt-get update \
 # Intel VAAPI Tone mapping dependencies:
 # Prefer NEO to Beignet since the latter one doesn't support Comet Lake or newer for now.
 # Do not use the intel-opencl-icd package from repo since they will not build with RELEASE_WITH_REGKEYS enabled.
-    # curl -s https://repositories.intel.com/graphics/intel-graphics.key | apt-key add - && \
-    # echo 'deb [arch=amd64] https://repositories.intel.com/graphics/ubuntu focal main' > /etc/apt/sources.list.d/intel-graphics.list && \
-    # apt install -y intel-media-va-driver-non-free vainfo && \
  && apt autoremove intel-* -y \
- && mkdir intel-compute-runtime \
- && cd intel-compute-runtime \
- && wget https://github.com/intel/compute-runtime/releases/download/${NEO_VERSION}/intel-gmmlib_${GMMLIB_VERSION}_amd64.deb \
- && wget https://github.com/intel/intel-graphics-compiler/releases/download/igc-${IGC_VERSION}/intel-igc-core_${IGC_VERSION}_amd64.deb \
- && wget https://github.com/intel/intel-graphics-compiler/releases/download/igc-${IGC_VERSION}/intel-igc-opencl_${IGC_VERSION}_amd64.deb \
- && wget https://github.com/intel/compute-runtime/releases/download/${NEO_VERSION}/intel-opencl-icd_${NEO_VERSION}_amd64.deb \
- && wget https://github.com/intel/compute-runtime/releases/download/${NEO_VERSION}/intel-level-zero-gpu_${LEVEL_ZERO_VERSION}_amd64.deb \
- && dpkg -i *.deb \
- && cd .. \
- && rm -rf intel-compute-runtime \
+#  && mkdir intel-compute-runtime \
+#  && cd intel-compute-runtime \
+#  && wget https://github.com/intel/compute-runtime/releases/download/${NEO_VERSION}/intel-gmmlib_${GMMLIB_VERSION}_amd64.deb \
+#  && wget https://github.com/intel/intel-graphics-compiler/releases/download/igc-${IGC_VERSION}/intel-igc-core_${IGC_VERSION}_amd64.deb \
+#  && wget https://github.com/intel/intel-graphics-compiler/releases/download/igc-${IGC_VERSION}/intel-igc-opencl_${IGC_VERSION}_amd64.deb \
+#  && wget https://github.com/intel/compute-runtime/releases/download/${NEO_VERSION}/intel-opencl-icd_${NEO_VERSION}_amd64.deb \
+#  && wget https://github.com/intel/compute-runtime/releases/download/${NEO_VERSION}/intel-level-zero-gpu_${LEVEL_ZERO_VERSION}_amd64.deb \
+#  && dpkg -i *.deb \
+#  && cd .. \
+#  && rm -rf intel-compute-runtime \
+ && curl -s https://repositories.intel.com/graphics/intel-graphics.key | apt-key add - \
+ && echo 'deb [arch=amd64] https://repositories.intel.com/graphics/ubuntu focal main' > /etc/apt/sources.list.d/intel-graphics.list \
+ && apt install -y intel-gmmlib intel-igc-core intel-igc-opencl intel-opencl-icd intel-level-zero-gpu intel-media-va-driver-non-free vainfo \
  && apt install -y fontconfig fonts-noto-cjk-extra \
  && apt-get remove gnupg wget apt-transport-https -y \
  && apt-get clean autoclean -y \
