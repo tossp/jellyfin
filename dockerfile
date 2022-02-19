@@ -45,7 +45,8 @@ RUN apt-get update \
  && wget https://github.com/intel/intel-graphics-compiler/releases/download/igc-${IGC_VERSION}/intel-igc-opencl_${IGC_VERSION}_amd64.deb \
  && wget https://github.com/intel/compute-runtime/releases/download/${NEO_VERSION}/intel-opencl-icd_${NEO_VERSION}_amd64.deb \
  && wget https://github.com/intel/compute-runtime/releases/download/${NEO_VERSION}/intel-level-zero-gpu_${LEVEL_ZERO_VERSION}_amd64.deb \
- && dpkg -i *.deb \
+ && wget https://github.com/intel/compute-runtime/releases/download/21.49.21786/ww49.sum && sha256sum -c ww49.sum \
+ && apt autoremove intel-* && dpkg -i *.deb \
  && cd .. \
  && rm -rf intel-compute-runtime \
  && apt install -y fontconfig fonts-noto-cjk-extra \
