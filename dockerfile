@@ -24,7 +24,7 @@ ARG LEVEL_ZERO_VERSION=1.2.21220
 # curl: healthcheck
 RUN apt-get update \
  && apt-get install --no-install-recommends --no-install-suggests -y ca-certificates gnupg wget apt-transport-https curl \
- && wget -O - https://repo.jellyfin.org/jellyfin_team.gpg.key | apt-key add - \
+ && wget -nv -O - https://repo.jellyfin.org/jellyfin_team.gpg.key | apt-key add - \
  && echo "deb [arch=$( dpkg --print-architecture )] https://repo.jellyfin.org/$( awk -F'=' '/^ID=/{ print $NF }' /etc/os-release ) $( awk -F'=' '/^VERSION_CODENAME=/{ print $NF }' /etc/os-release ) main" | tee /etc/apt/sources.list.d/jellyfin.list \
  && apt-get update \
  && apt-get install --no-install-recommends --no-install-suggests -y \
@@ -35,21 +35,21 @@ RUN apt-get update \
 # Intel VAAPI Tone mapping dependencies:
 # Prefer NEO to Beignet since the latter one doesn't support Comet Lake or newer for now.
 # Do not use the intel-opencl-icd package from repo since they will not build with RELEASE_WITH_REGKEYS enabled.
-#  && apt autoremove intel-* -y \
+ && apt autoremove intel-* -y \
  && mkdir intel-compute-runtime \
  && cd intel-compute-runtime \
- && wget https://github.com/intel/compute-runtime/releases/download/${NEO_VERSION}/intel-gmmlib_${GMMLIB_VERSION}_amd64.deb \
- && wget https://github.com/intel/intel-graphics-compiler/releases/download/igc-${IGC_VERSION}/intel-igc-core_${IGC_VERSION}_amd64.deb \
- && wget https://github.com/intel/intel-graphics-compiler/releases/download/igc-${IGC_VERSION}/intel-igc-opencl_${IGC_VERSION}_amd64.deb \
- && wget https://github.com/intel/compute-runtime/releases/download/${NEO_VERSION}/intel-opencl_${NEO_VERSION}_amd64.deb \
- && wget https://github.com/intel/compute-runtime/releases/download/${NEO_VERSION}/intel-ocloc_${NEO_VERSION}_amd64.deb \
- && wget https://github.com/intel/compute-runtime/releases/download/${NEO_VERSION}/intel-level-zero-gpu_${LEVEL_ZERO_VERSION}_amd64.deb \
+ && wget -nv https://github.com/intel/compute-runtime/releases/download/${NEO_VERSION}/intel-gmmlib_${GMMLIB_VERSION}_amd64.deb \
+ && wget -nv https://github.com/intel/intel-graphics-compiler/releases/download/igc-${IGC_VERSION}/intel-igc-core_${IGC_VERSION}_amd64.deb \
+ && wget -nv https://github.com/intel/intel-graphics-compiler/releases/download/igc-${IGC_VERSION}/intel-igc-opencl_${IGC_VERSION}_amd64.deb \
+ && wget -nv https://github.com/intel/compute-runtime/releases/download/${NEO_VERSION}/intel-opencl_${NEO_VERSION}_amd64.deb \
+ && wget -nv https://github.com/intel/compute-runtime/releases/download/${NEO_VERSION}/intel-ocloc_${NEO_VERSION}_amd64.deb \
+ && wget -nv https://github.com/intel/compute-runtime/releases/download/${NEO_VERSION}/intel-level-zero-gpu_${LEVEL_ZERO_VERSION}_amd64.deb \
  && dpkg -i *.deb \
  && cd .. \
  && rm -rf intel-compute-runtime \
- && curl -s https://repositories.intel.com/graphics/intel-graphics.key | apt-key add - \
- && echo 'deb [arch=amd64] https://repositories.intel.com/graphics/ubuntu focal main' > /etc/apt/sources.list.d/intel-graphics.list \
- && apt install -y intel-media-va-driver-non-free vainfo \
+#  && curl -s https://repositories.intel.com/graphics/intel-graphics.key | apt-key add - \
+#  && echo 'deb [arch=amd64] https://repositories.intel.com/graphics/ubuntu focal main' > /etc/apt/sources.list.d/intel-graphics.list \
+#  && apt install -y intel-media-va-driver-non-free vainfo \
  && apt install -y fontconfig fonts-noto-cjk-extra \
  && apt-get remove gnupg wget apt-transport-https -y \
  && apt-get clean autoclean -y \
