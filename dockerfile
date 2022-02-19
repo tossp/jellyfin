@@ -38,6 +38,7 @@ RUN apt-get update \
     # curl -s https://repositories.intel.com/graphics/intel-graphics.key | apt-key add - && \
     # echo 'deb [arch=amd64] https://repositories.intel.com/graphics/ubuntu focal main' > /etc/apt/sources.list.d/intel-graphics.list && \
     # apt install -y intel-media-va-driver-non-free vainfo && \
+ && apt autoremove intel-* -y \
  && mkdir intel-compute-runtime \
  && cd intel-compute-runtime \
  && wget https://github.com/intel/compute-runtime/releases/download/${NEO_VERSION}/intel-gmmlib_${GMMLIB_VERSION}_amd64.deb \
@@ -45,7 +46,7 @@ RUN apt-get update \
  && wget https://github.com/intel/intel-graphics-compiler/releases/download/igc-${IGC_VERSION}/intel-igc-opencl_${IGC_VERSION}_amd64.deb \
  && wget https://github.com/intel/compute-runtime/releases/download/${NEO_VERSION}/intel-opencl-icd_${NEO_VERSION}_amd64.deb \
  && wget https://github.com/intel/compute-runtime/releases/download/${NEO_VERSION}/intel-level-zero-gpu_${LEVEL_ZERO_VERSION}_amd64.deb \
- && apt autoremove intel-* && dpkg -i *.deb \
+ && dpkg -i *.deb \
  && cd .. \
  && rm -rf intel-compute-runtime \
  && apt install -y fontconfig fonts-noto-cjk-extra \
