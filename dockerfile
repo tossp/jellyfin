@@ -48,7 +48,7 @@ RUN apt-get update \
 #  && dpkg -i *.deb \
 #  && cd .. \
 #  && rm -rf intel-compute-runtime \
- && apt install -y iintel-opencl-icd intel-level-zero-gpu level-zero intel-media-va-driver-non-free libmfx1 vainfo \
+ && apt install -y intel-opencl-icd intel-level-zero-gpu level-zero intel-media-va-driver-non-free libmfx1 vainfo \
  && apt install -y fontconfig fonts-noto-cjk-extra \
  && apt-get remove gnupg wget apt-transport-https -y \
  && apt-get clean autoclean -y \
