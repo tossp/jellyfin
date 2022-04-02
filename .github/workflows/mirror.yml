@@ -8,7 +8,7 @@ on:
       - '/dockerfile'
 # 定时调度
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "30 5 * * 5"
 
   # Allows you to run this workflow manually from the Actions tab
 # 可以手动触发
