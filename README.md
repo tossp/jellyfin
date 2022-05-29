@@ -12,3 +12,4 @@
 docker pull tossp/jellyfin
 docker pull registry.cn-hangzhou.aliyuncs.com/tossp/jellyfin
 ```
+
